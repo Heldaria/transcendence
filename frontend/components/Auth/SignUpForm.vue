@@ -7,27 +7,58 @@ const password = ref('')
 const isValid = computed(() => {
     return username.value !== '' && email.value !== '' && password.value !== ''
 })
+
+import '/frontend/public/styles/home.css';
+
 </script>
 <template>
-    <div class="w-80  bg-white p-6 rounded-lg relative">
-        <h1 class="text-black text-2xl">First time ? 😄</h1>
-        <h1 class="text-gray text-2xl mb-6">Create your account !</h1>
-        <form @submit.prevent="client.auth.signup({ username, email, password })" class="flex flex-col space-y-4 " autocomplete="off" autocorrect="off">
-            <input type="text" v-model="username" name="username" placeholder="Username"
-                class="rounded-lg px-3 py-2 text-black b-1" />
-            <input type="email" v-model="email" name="email" placeholder="Email" class="rounded-lg px-3 py-2 text-black b-1" />
-            <input type="password" v-model="password" name="password" placeholder="Password"
-                class="rounded-lg px-3 py-2 text-black b-1" />
-           
-            <button type="submit" :disabled="!isValid" class=" text-white cursor-pointer hover:scale-105 transition rounded-lg px-4 py-2" :class="{
-                'bg-blue-500 hover:bg-blue-600 transition duration-300': isValid,
-                'bg-blue-500/50': !isValid,
-            }">
-                Sign Up
-            </button>
-            <h1 class="text-gray text-2s flex justify-center">or</h1>
-            <a href="#" class="text-blue-500 hover:text-blue-600 flex justify-center" @click="auth.mode = 'login'">
-                Log In
+    <div class="p-6 relative w-full">
+        <h1 class="home-font px-4 pt-2 text-4xl text-center">First time ? </h1>
+        <h1 class="home-font px-4 pb-6 text-4xl mb-6 text-center">Let's create your account !</h1>
+        
+        <form @submit.prevent="client.auth.signup({ username, email, password })" class="flex flex-col gap-2 w-full" autocomplete="off" autocorrect="off">
+            <div class="term-box flex flex-col">
+                <!-- Username input -->
+                <div class="flex flex-row w-full p-5">
+                    <span class="home-font text-2xl">Username:</span>
+                    <input type="username" v-model="username" name="username"
+                        class="w-full px-3 text-2xl home-font outline-0" style="background-color: transparent; caret-color:rgb(0, 255, 191);" />
+                </div>
+                <!-- Email input -->
+                <div class="flex flex-row w-full px-5 pb-5">
+                    <span class="home-font text-2xl">Email:</span>
+                    <input type="email" v-model="email" name="email"
+                        class="w-full px-3 text-2xl home-font outline-0" style="background-color: transparent; caret-color:rgb(0, 255, 191);" />
+                </div>
+                <!-- Password input -->
+                <div class="flex flex-row w-full px-5">
+                    <span class="home-font text-2xl">Password:</span>
+                    <input type="password" v-model="password" name="password"
+                        class="w-full px-3 text-2xl home-font outline-0" style="background-color: transparent; caret-color:rgb(0, 255, 191);" />
+                </div>
+
+                <div class="px-5 text-red">
+                    {{ auth.error }}
+                </div>
+
+                <!-- Signup -->
+                <div class="text-center pb-5">
+                    <button type="submit" class="home-font home-button layers hero glitch text-4xl " :class="{
+                        'transition duration-300': isValid,
+                    }"  data-text="LOG IN">
+                        SIGN UP
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <div class="home-font px-4 pt-20 text-4xl mb-6 text-center">
+                    Remembered you already have an account ?
+                </div>
+            </div>
+
+            <a href="#" class="text-center items-center p-4 home-font home-button layers hero glitch text-3xl cursor-pointer hover:color-white" data-text="Log in" @click="auth.mode = 'login'">
+                Log in
             </a>
         </form>
     </div>

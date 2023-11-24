@@ -13,44 +13,80 @@ const loginGoogle = async () => {
     await client.auth.loginWithGoogle()
 }
 
+import '/frontend/public/styles/home.css';
+
 </script>
 <template>
-    <div class="w-80 bg-white p-6 rounded-lg relative">
-        <h1 class="text-black text-2xl">
-            Welcome Back ! 😊 
-        </h1>
-        <h1 class="text-gray text-2xl mb-6">Log In to Your Account</h1>
-        <form @submit.prevent="auth.login('credentials',{
+   <div class="p-6 relative w-full">
+       
+        <div class="home-font px-4 py-6 text-4xl mb-6 text-center">Log in to your account</div>
+        <form @submit.prevent="client.auth.authenticateUser({
                 email: email,
                 password: password
-            })" class="flex flex-col space-y-4" >
-            <input type="email" v-model="email" name="email" placeholder="Email" class="rounded-lg px-3 py-2 text-black b-1 " />
-            <input type="password" v-model="password" name="password" placeholder="Password"
-                class="rounded-lg px-3 py-2 text-black  b-1" />
-            
+            })" class="flex flex-col gap-2 w-full" autocomplete="off">
 
-            <!-- Default Login-->
-            <button type="submit" :disabled="!isValid" class=" text-white rounded-lg  cursor-pointer hover:scale-105 transition px-4 py-2" :class="{
-                'bg-blue-500/50': !isValid,
-                'bg-blue-500 hover:bg-blue-600 transition duration-300': isValid,
-            }">
-                Log In
-            </button>   
+            <div class="term-box flex flex-col">
+                <!-- Email Input -->
+                <div class="flex flex-row w-full p-5">
+                    <span class="home-font text-2xl">Email:</span>
+                    <input type="email" v-model="email" name="email"
+                        class="w-full px-3 text-2xl home-font outline-0" style="background-color: transparent; caret-color:rgb(0, 255, 191);"/>
+                </div>
 
-            <!-- Google Login-->
-            <button type="button" @click="auth.login('google')" class="bg-white-500 border-2 border-gray-300 text-gray-600 font-semibold rounded-lg cursor-pointer hover:scale-105 transition px-4 py-2 flex justify-center items-center">
-            <img src="/google_signin_logo.png" alt="Google Logo" class="w-6 h-6 mr-2" /> Sign in with Google
-            </button>
+                 <!-- Password Input -->
+                <div class="flex flex-row w-full px-5">
+                    <span class="home-font text-2xl">Password:</span>
+                    <input type="password" v-model="password" name="password"
+                        class="px-3 text-2xl home-font outline-0" style="background-color: transparent; caret-color:rgb(0, 255, 191);"/>
+                </div>
 
-            <!-- 42 Login-->
-            <button type="button" @click="auth.login('42')" class="bg-white-500 border-2 border-gray-300 text-gray-600 font-semibold rounded-lg cursor-pointer hover:scale-105 transition px-4 py-2 flex justify-center items-center">
-            <img src="/42_Logo.png" alt="42 Logo" class="w-6 h-6 mr-2" /> Sign in with Intra
-            </button>
-            
-            <h1 class="text-gray text-2s flex justify-center">or</h1>
-            <a href="#" class="text-blue-500 hover:text-blue-600 flex justify-center" @click="auth.mode = 'signup'">
-                Sign Up
+                <div class="px-5 text-red">
+                    {{ auth.error }}
+                </div>
+
+                <!-- Default Login-->
+                <div class="text-center pb-5">
+                <button class="home-font home-button layers hero glitch text-4xl " :class="{
+                    'transition duration-300': isValid,
+                }"  data-text="LOG IN">
+                    LOG IN
+                </button>
+                </div>
+            </div>
+
+            <div>
+                <div class="home-font px-4 pt-10 text-4xl mb-6 text-center">
+                    You do not have an account yet ?
+                </div>
+            </div>
+
+            <a href="#" class="text-center items-center p-4 home-font home-button layers hero glitch text-2xl cursor-pointer hover:color-white" data-text="Sign up" @click="auth.mode = 'signup'">
+                Sign up
             </a>
+
+            <div class="flex flex-row gap-20 w-full justify-center items-center">
+                <!-- Google Login-->
+                <div class="flex flex-row gap-2">
+                    <div>
+                        <img src="../../public/google_signin_logo.png" alt="Google Logo" class="py-3 w-8 home-font home-button layers hero glitch" />
+                    </div>
+                    <button type="button" @click="loginGoogle" class="items-center text-2xl home-font home-button layers hero glitch text-left cursor-pointer hover:color-white py-4"
+                        data-text="Sign in with Google">Sign in with Google
+                    </button>
+                </div>
+
+
+                 <!-- 42 Login-->
+                <div class="flex flex-row gap-2">
+                    <div>
+                        <img src="../../public/42_Logo.png" alt="42 Logo" class="w-8 home-font home-button layers hero glitch" />
+                    </div>
+                    <button type="button" @click="login42" class="text-2xl home-font home-button layers hero glitch cursor-pointer hover:color-white" data-text="Sign in with Intra">
+                        Sign in with Intra
+                    </button>
+                </div>
+
+            </div>
         </form>
     </div>
 </template> 
